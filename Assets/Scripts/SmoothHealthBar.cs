@@ -9,10 +9,10 @@ public class SmoothHealthBar : MonoBehaviour
     private float _smoothSpeed;
     private float _targetHealth;
 
-    private void Start()
+    private void Awake()
     {
-        _targetHealth = _health.CurrentHealth;
-        _healthBar.value = _health.CurrentHealth;
+        _targetHealth = _health.MaxHealth;
+        _healthBar.value = _health.MaxHealth;
         _smoothSpeed = _health.MaxHealth;
 }
 

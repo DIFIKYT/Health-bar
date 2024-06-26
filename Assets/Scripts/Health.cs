@@ -11,10 +11,19 @@ public class Health : MonoBehaviour
     public event Action<float> HealthChanged;
 
     private float _currentHealth;
+    private int _minRandomValue;
+    private int _maxRandomValue;
 
     public int MaxHealth => _maxHealth;
     public float CurrentHealth => _currentHealth;
     private bool IsAlive => _currentHealth > 0;
+
+    private void Awake()
+    {
+        _currentHealth = _maxHealth;
+        _minRandomValue = 1;
+        _maxRandomValue = 50;
+    }
 
     private void OnEnable()
     {
@@ -28,14 +37,9 @@ public class Health : MonoBehaviour
         _restoreHealthButton.onClick.RemoveAllListeners();
     }
 
-    private void Awake()
-    {
-        _currentHealth = _maxHealth;
-    }
-
     private void OnReduce()
     {
-        int Amount = UnityEngine.Random.Range(1, 50);
+        int Amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
 
         //if (Amount <= 0)
         //    return;
@@ -50,7 +54,7 @@ public class Health : MonoBehaviour
 
     private void OnRestore()
     {
-        int Amount = UnityEngine.Random.Range(1, 50);
+        int Amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
 
         //if (Amount <= 0)
         //    return;
