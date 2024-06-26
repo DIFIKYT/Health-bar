@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +8,18 @@ public class Health : MonoBehaviour
     [SerializeField] private Button _reduceHealthButton;
     [SerializeField] private Button _restoreHealthButton;
 
-    private int _ñurrentHealth;
-    private bool IsAlive => _ñurrentHealth > 0;
+    public event Action<float> HealthChanged;
+
+    private float _currentHealth;
+
+    public int MaxHealth => _maxHealth;
+    public float CurrentHealth => _currentHealth;
+    private bool IsAlive => _currentHealth > 0;
 
     private void OnEnable()
     {
-        _reduceHealthButton.onClick.AddListener(Reduce);
-        _restoreHealthButton.onClick.AddListener(Restore);
+        _reduceHealthButton.onClick.AddListener(OnReduce);
+        _restoreHealthButton.onClick.AddListener(OnRestore);
     }
 
     private void OnDisable()
@@ -24,29 +30,33 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
-        _ñurrentHealth = _maxHealth;
+        _currentHealth = _maxHealth;
     }
 
-    private void Reduce()
+    private void OnReduce()
     {
-        int Amount = 20;
+        int Amount = UnityEngine.Random.Range(1, 50);
 
-        if (Amount <= 0)
-            return;
+        //if (Amount <= 0)
+        //    return;
 
-        _ñurrentHealth -= Amount;
+        _currentHealth -= Amount;
 
         if (IsAlive == false)
-            _ñurrentHealth = 0;
+            _currentHealth = 0;
+
+        HealthChanged?.Invoke(_currentHealth);
     }
 
-    private void Restore()
+    private void OnRestore()
     {
-        int Amount = 20;
+        int Amount = UnityEngine.Random.Range(1, 50);
 
-        if (Amount <= 0)
-            return;
+        //if (Amount <= 0)
+        //    return;
 
-        _ñurrentHealth = Mathf.Clamp(_ñurrentHealth + Amount, 0, _maxHealth);
+        _currentHealth = Mathf.Clamp(_currentHealth + Amount, 0, _maxHealth);
+
+        HealthChanged?.Invoke(_currentHealth);
     }
 }
