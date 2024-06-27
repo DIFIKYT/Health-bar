@@ -7,6 +7,6 @@ public class TextHealth : HealthView
 
     protected override void View(float currentHealth)
     {
-        _text.text = $"{_health.CurrentHealth}/{_health.MaxHealth}";
+        _text.text = $"{Health.CurrentAmount}/{Health.MaxAmount}";
     }
 }

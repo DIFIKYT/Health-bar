@@ -4,57 +4,57 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField, Min(1)] private int _maxHealth;
-    [SerializeField] private Button _reduceHealthButton;
-    [SerializeField] private Button _restoreHealthButton;
+    [SerializeField, Min(1)] private int _maxAmount;
+    [SerializeField] private Button _reduceButton;
+    [SerializeField] private Button _restoreButton;
 
-    public event Action<float> HealthChanged;
+    public event Action<float> Changed;
 
-    private float _currentHealth;
+    private float _currentAmount;
     private int _minRandomValue;
     private int _maxRandomValue;
 
-    public int MaxHealth => _maxHealth;
-    public float CurrentHealth => _currentHealth;
-    private bool IsAlive => _currentHealth > 0;
+    public int MaxAmount => _maxAmount;
+    public float CurrentAmount => _currentAmount;
+    private bool IsAlive => _currentAmount > 0;
 
     private void Awake()
     {
-        _currentHealth = _maxHealth;
+        _currentAmount = _maxAmount;
         _minRandomValue = 1;
         _maxRandomValue = 50;
     }
 
     private void OnEnable()
     {
-        _reduceHealthButton.onClick.AddListener(OnReduce);
-        _restoreHealthButton.onClick.AddListener(OnRestore);
+        _reduceButton.onClick.AddListener(OnReduce);
+        _restoreButton.onClick.AddListener(OnRestore);
     }
 
     private void OnDisable()
     {
-        _reduceHealthButton.onClick.RemoveAllListeners();
-        _restoreHealthButton.onClick.RemoveAllListeners();
+        _reduceButton.onClick.RemoveAllListeners();
+        _restoreButton.onClick.RemoveAllListeners();
     }
 
     private void OnReduce()
     {
-        int Amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
+        int amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
 
-        _currentHealth -= Amount;
+        _currentAmount -= amount;
 
         if (IsAlive == false)
-            _currentHealth = 0;
+            _currentAmount = 0;
 
-        HealthChanged?.Invoke(_currentHealth);
+        Changed?.Invoke(_currentAmount);
     }
 
     private void OnRestore()
     {
-        int Amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
+        int amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
 
-        _currentHealth = Mathf.Clamp(_currentHealth + Amount, 0, _maxHealth);
+        _currentAmount = Mathf.Clamp(_currentAmount + amount, 0, _maxAmount);
 
-        HealthChanged?.Invoke(_currentHealth);
+        Changed?.Invoke(_currentAmount);
     }
 }

@@ -12,8 +12,8 @@ public class SmoothHealthBar : HealthView
 
     private void Awake()
     {
-        _targetHealth = _health.MaxHealth;
-        _healthBar.value = _health.MaxHealth;
+        _targetHealth = Health.MaxAmount;
+        _healthBar.value = Health.MaxAmount;
     }
 
     protected override void View(float amount)
