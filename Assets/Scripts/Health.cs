@@ -41,9 +41,6 @@ public class Health : MonoBehaviour
     {
         int Amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
 
-        //if (Amount <= 0)
-        //    return;
-
         _currentHealth -= Amount;
 
         if (IsAlive == false)
@@ -55,9 +52,6 @@ public class Health : MonoBehaviour
     private void OnRestore()
     {
         int Amount = UnityEngine.Random.Range(_minRandomValue, _maxRandomValue);
-
-        //if (Amount <= 0)
-        //    return;
 
         _currentHealth = Mathf.Clamp(_currentHealth + Amount, 0, _maxHealth);
 
